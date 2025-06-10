@@ -11,15 +11,18 @@ import Image from "next/image";
 import {
   MapPin,
   Users,
-  BarChart3,
-  Bell,
-  Star,
   Bot,
   User,
   Shield,
   Globe,
   ArrowRight,
   CheckCircle,
+  Brain,
+  Zap,
+  Activity,
+  ShoppingCart,
+  TrendingUp,
+  GitBranch,
 } from "lucide-react";
 
 function Logo() {
@@ -46,6 +49,42 @@ function Logo() {
 
 const features = [
   {
+    icon: Brain,
+    title: "ML Preditivos",
+    description:
+      "Modelos de Machine Learning para previsão de churn, cross-selling e análise de consumo",
+  },
+  {
+    icon: Zap,
+    title: "Eficiência da Bomba",
+    description:
+      "Process Mining e benchmarking inteligente para otimização operacional",
+  },
+  {
+    icon: ShoppingCart,
+    title: "E-commerce Integrado",
+    description:
+      "Compre peças, óleo sintético e solicite serviços diretamente na plataforma",
+  },
+  {
+    icon: Activity,
+    title: "Process Mining",
+    description:
+      "Descoberta automática de processos e identificação de gargalos operacionais",
+  },
+  {
+    icon: TrendingUp,
+    title: "Analytics Avançados",
+    description:
+      "Dashboards executivos com insights de performance e tendências de mercado",
+  },
+  {
+    icon: GitBranch,
+    title: "Melhores Práticas",
+    description:
+      "Biblioteca de práticas operacionais com análise de impacto e implementação",
+  },
+  {
     icon: MapPin,
     title: "Localizador Inteligente",
     description:
@@ -57,21 +96,6 @@ const features = [
     description: "Conecte-se com outros utilizadores e partilhe experiências",
   },
   {
-    icon: BarChart3,
-    title: "Gestão de Consumo",
-    description: "Monitore e otimize o seu consumo com análises inteligentes",
-  },
-  {
-    icon: Bell,
-    title: "Alertas Inteligentes",
-    description: "Receba notificações personalizadas baseadas nos seus padrões",
-  },
-  {
-    icon: Star,
-    title: "Sistema de Feedback",
-    description: "Avalie serviços e contribua para a melhoria contínua",
-  },
-  {
     icon: Bot,
     title: "Assistente Virtual IA",
     description: "Suporte 24/7 com inteligência artificial avançada",
@@ -80,9 +104,9 @@ const features = [
 
 const stats = [
   { number: "300+", label: "Bombas Conectadas" },
-  { number: "5M+", label: "Utilizadores Ativos" },
-  { number: "90%", label: "Satisfação do Cliente" },
-  { number: "24/7", label: "Suporte Disponível" },
+  { number: "8", label: "Modelos ML Ativos" },
+  { number: "94%", label: "Precisão IA" },
+  { number: "24/7", label: "Process Mining" },
 ];
 
 export default function Home() {
@@ -320,10 +344,12 @@ export default function Home() {
                   </p>
                   <div className="space-y-4">
                     {[
-                      "Previsão de consumo com 95% de precisão",
-                      "Recomendações personalizadas em tempo real",
-                      "Análise preditiva de manutenção",
-                      "Moderação automática de conteúdo",
+                      "Modelos ML para previsão de churn e cross-selling",
+                      "Process Mining com descoberta automática de gargalos",
+                      "Benchmarking inteligente entre postos",
+                      "E-commerce integrado com recomendações IA",
+                      "Analytics preditivos com 94% de precisão",
+                      "Biblioteca de melhores práticas automatizada",
                     ].map((item, index) => (
                       <motion.div
                         key={item}

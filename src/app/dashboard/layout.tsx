@@ -63,6 +63,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             📊 Consumo
           </Link>
           <Link
+            href="/dashboard/e-commerce"
+            className="text-sm font-medium hover:text-yellow-600 transition-colors"
+          >
+            🛒 E-commerce
+          </Link>
+          <Link
             href="/dashboard/perfil"
             className="text-sm font-medium hover:text-yellow-600 transition-colors"
           >
@@ -99,7 +105,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 <User className="h-4 w-4 text-white" />
               </div>
               <span className="hidden md:block text-sm font-medium">
-                João Silva
+                Alana Sofia
               </span>
             </button>
           </div>
@@ -151,6 +157,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               >
                 <span>📊</span>
                 <span>Consumo</span>
+              </Link>
+              <Link
+                href="/dashboard/e-commerce"
+                className="flex items-center space-x-2 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>🛒</span>
+                <span>E-commerce</span>
               </Link>
               <Link
                 href="/dashboard/perfil"

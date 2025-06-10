@@ -36,6 +36,8 @@ export default function StationsPage() {
                 <TableHead>Status</TableHead>
                 <TableHead>Nível de Gasóleo</TableHead>
                 <TableHead>Nível de Gasolina</TableHead>
+                <TableHead className="text-right">Valor Arrecadado</TableHead>
+                <TableHead className="text-right">Perdas</TableHead>
                 <TableHead className="text-right">Última Atualização</TableHead>
               </TableRow>
             </TableHeader>
@@ -76,6 +78,16 @@ export default function StationsPage() {
                       />
                       <span>{station.gasolineLevel}%</span>
                     </div>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <span className="font-medium text-green-600">
+                      {station.dailyRevenue.toLocaleString()} AOA
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <span className="font-medium text-red-600">
+                      {station.losses.toLocaleString()} AOA
+                    </span>
                   </TableCell>
                   <TableCell className="text-right">
                     {new Date(station.lastUpdate).toLocaleString()}

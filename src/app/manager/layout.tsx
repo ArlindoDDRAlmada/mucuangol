@@ -12,6 +12,8 @@ import {
   Bell,
   UserCircle,
   Home,
+  Brain,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
@@ -29,6 +31,12 @@ export default function ManagerLayout({
   const navItems = [
     { href: "/manager", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/manager/analytics", icon: BarChart3, label: "Analytics" },
+    { href: "/manager/ml-predictive", icon: Brain, label: "ML Preditivos" },
+    {
+      href: "/manager/pump-efficiency",
+      icon: Zap,
+      label: "Eficiência da Bomba",
+    },
     { href: "/manager/stations", icon: Fuel, label: "Postos" },
     { href: "/manager/customers", icon: Users, label: "Clientes" },
   ];

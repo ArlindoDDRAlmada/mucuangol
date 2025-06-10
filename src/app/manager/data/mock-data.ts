@@ -35,13 +35,83 @@ export const fuelSalesData = [
 ];
 
 export const stationStatusData = [
-    { id: "PS001", name: "Posto Central", location: "Luanda", status: "Operacional", dieselLevel: 85, gasolineLevel: 70, lastUpdate: "2025-06-09T09:00:00Z" },
-    { id: "PS002", name: "Posto Aeroporto", location: "Luanda", status: "Manutenção", dieselLevel: 30, gasolineLevel: 25, lastUpdate: "2025-06-09T08:30:00Z" },
-    { id: "PS003", name: "Posto Viana", location: "Viana", status: "Offline", dieselLevel: 0, gasolineLevel: 0, lastUpdate: "2025-06-09T07:45:00Z" },
-    { id: "PS004", name: "Posto Cacuaco", location: "Cacuaco", status: "Operacional", dieselLevel: 95, gasolineLevel: 90, lastUpdate: "2025-06-09T09:15:00Z" },
-    { id: "PS005", name: "Posto Benfica", location: "Benfica", status: "Operacional", dieselLevel: 60, gasolineLevel: 55, lastUpdate: "2025-06-09T09:05:00Z" },
-    { id: "PS006", name: "Posto Talatona", location: "Talatona", status: "Manutenção", dieselLevel: 15, gasolineLevel: 10, lastUpdate: "2025-06-09T08:00:00Z" },
-    { id: "PS007", name: "Posto Kikolo", location: "Kikolo", status: "Operacional", dieselLevel: 75, gasolineLevel: 80, lastUpdate: "2025-06-09T09:20:00Z" },
+    {
+        id: "PS001",
+        name: "Posto Central",
+        location: "Luanda",
+        status: "Operacional",
+        dieselLevel: 85,
+        gasolineLevel: 70,
+        lastUpdate: "2025-06-09T09:00:00Z",
+        dailyRevenue: 2850000, // AOA
+        losses: 45000 // AOA
+    },
+    {
+        id: "PS002",
+        name: "Posto Aeroporto",
+        location: "Luanda",
+        status: "Manutenção",
+        dieselLevel: 30,
+        gasolineLevel: 25,
+        lastUpdate: "2025-06-09T08:30:00Z",
+        dailyRevenue: 1950000, // AOA
+        losses: 125000 // AOA (higher due to maintenance issues)
+    },
+    {
+        id: "PS003",
+        name: "Posto Viana",
+        location: "Viana",
+        status: "Offline",
+        dieselLevel: 0,
+        gasolineLevel: 0,
+        lastUpdate: "2025-06-09T07:45:00Z",
+        dailyRevenue: 0, // AOA (offline)
+        losses: 350000 // AOA (total loss due to offline status)
+    },
+    {
+        id: "PS004",
+        name: "Posto Cacuaco",
+        location: "Cacuaco",
+        status: "Operacional",
+        dieselLevel: 95,
+        gasolineLevel: 90,
+        lastUpdate: "2025-06-09T09:15:00Z",
+        dailyRevenue: 3200000, // AOA
+        losses: 25000 // AOA
+    },
+    {
+        id: "PS005",
+        name: "Posto Benfica",
+        location: "Benfica",
+        status: "Operacional",
+        dieselLevel: 60,
+        gasolineLevel: 55,
+        lastUpdate: "2025-06-09T09:05:00Z",
+        dailyRevenue: 2100000, // AOA
+        losses: 65000 // AOA
+    },
+    {
+        id: "PS006",
+        name: "Posto Talatona",
+        location: "Talatona",
+        status: "Manutenção",
+        dieselLevel: 15,
+        gasolineLevel: 10,
+        lastUpdate: "2025-06-09T08:00:00Z",
+        dailyRevenue: 850000, // AOA
+        losses: 180000 // AOA (higher due to maintenance)
+    },
+    {
+        id: "PS007",
+        name: "Posto Kikolo",
+        location: "Kikolo",
+        status: "Operacional",
+        dieselLevel: 75,
+        gasolineLevel: 80,
+        lastUpdate: "2025-06-09T09:20:00Z",
+        dailyRevenue: 2650000, // AOA
+        losses: 35000 // AOA
+    },
 ];
 
 export const aiAlertsData = [
@@ -86,8 +156,32 @@ export const campaignData = {
     chatbotResolution: 78,
 };
 
-export const heatmapData = Array.from({ length: 24 * 7 }).map((_, i) => ({
-    day: Math.floor(i / 24),
-    hour: i % 24,
-    value: Math.floor(Math.random() * 100),
-}));
+export const heatmapData = Array.from({ length: 24 * 7 }).map((_, i) => {
+    // Generate deterministic values based on day and hour patterns
+    const day = Math.floor(i / 24);
+    const hour = i % 24;
+
+    // Create realistic patterns: higher values during business hours and weekdays
+    let baseValue = 30;
+
+    // Weekend pattern (lower activity)
+    if (day === 0 || day === 6) {
+        baseValue = 20;
+    }
+
+    // Business hours pattern (higher activity 7-19h)
+    if (hour >= 7 && hour <= 19) {
+        baseValue += 40;
+    } else if (hour >= 20 && hour <= 22) {
+        baseValue += 20;
+    }
+
+    // Add some variation based on position to make it look realistic
+    const variation = ((day * 24 + hour) * 17) % 30; // Deterministic variation
+
+    return {
+        day,
+        hour,
+        value: Math.min(100, baseValue + variation),
+    };
+});

@@ -1,8 +1,6 @@
 import Link from "next/link";
 import {
   MapPin,
-  Users,
-  BarChart3,
   User,
   ChevronRight,
   TrendingUp,
@@ -10,6 +8,10 @@ import {
   Star,
   Zap,
   Lightbulb,
+  ShoppingCart,
+  Brain,
+  Target,
+  Gift,
 } from "lucide-react";
 
 const DashboardPage = () => {
@@ -39,20 +41,24 @@ const DashboardPage = () => {
       <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
         <div className="flex items-center space-x-4">
           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Lightbulb className="h-6 w-6 text-primary" />
+            <Brain className="h-6 w-6 text-primary" />
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-foreground mb-1">
-              Insight IA do Dia
+              Recomendação IA Personalizada
             </h3>
             <p className="text-muted-foreground">
-              Baseado no seu padrão, a sua botija de gás deve durar mais 8 dias.
-              Recomendamos abastecer na Bomba Maianga (15% mais barato hoje).
+              Baseado no seu histórico, você economizará 18% comprando óleo
+              sintético no E-commerce. Entrega grátis disponível para a sua
+              região hoje.
             </p>
           </div>
-          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors duration-200">
-            Ver Mais
-          </button>
+          <Link
+            href="/dashboard/e-commerce"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors duration-200"
+          >
+            Ver Ofertas
+          </Link>
         </div>
       </div>
 
@@ -66,10 +72,10 @@ const DashboardPage = () => {
           color="blue"
         />
         <StatCard
-          icon={<Zap className="h-5 w-5" />}
-          title="Gás Restante"
-          value="8 dias"
-          subtitle="Estimativa IA"
+          icon={<ShoppingCart className="h-5 w-5" />}
+          title="Carrinho E-commerce"
+          value="3 itens"
+          subtitle="Desconto 15% ativo"
           color="orange"
         />
         <StatCard
@@ -80,16 +86,23 @@ const DashboardPage = () => {
           color="yellow"
         />
         <StatCard
-          icon={<BarChart3 className="h-5 w-5" />}
-          title="Economia Mensal"
-          value="12%"
-          subtitle="vs mês anterior"
+          icon={<Target className="h-5 w-5" />}
+          title="Meta de Economia"
+          value="87%"
+          subtitle="Objetivo mensal"
           color="green"
         />
       </div>
 
       {/* Quick Access Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <FeatureCard
+          icon={<ShoppingCart className="h-6 w-6 text-primary" />}
+          title="E-commerce Sonangol"
+          description="Peças, acessórios e óleos • Entrega grátis"
+          href="/dashboard/e-commerce"
+          badge="15% desconto"
+        />
         <FeatureCard
           icon={<MapPin className="h-6 w-6 text-primary" />}
           title="Localizador de Bombas"
@@ -98,18 +111,11 @@ const DashboardPage = () => {
           badge="3 disponíveis"
         />
         <FeatureCard
-          icon={<Users className="h-6 w-6 text-primary" />}
-          title="Comunidade"
-          description="1.247 membros • 15 posts hoje"
-          href="/dashboard/comunidade"
-          badge="5 novas dicas"
-        />
-        <FeatureCard
-          icon={<BarChart3 className="h-6 w-6 text-primary" />}
-          title="Gestão de Consumo"
-          description="Análise inteligente • Previsões IA"
+          icon={<Brain className="h-6 w-6 text-primary" />}
+          title="Insights Personalizados"
+          description="IA analisa seu consumo • Recomendações"
           href="/dashboard/consumo"
-          badge="Relatório pronto"
+          badge="3 novas dicas"
         />
         <FeatureCard
           icon={<User className="h-6 w-6 text-primary" />}
@@ -126,24 +132,28 @@ const DashboardPage = () => {
           <div>
             <div className="flex items-center space-x-3 mb-3">
               <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Star className="h-4 w-4 text-primary" />
+                <Gift className="h-4 w-4 text-primary" />
               </div>
               <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-                PROMOÇÃO ESPECIAL
+                LANÇAMENTO E-COMMERCE
               </span>
             </div>
             <h2 className="text-2xl font-semibold text-foreground mb-2">
-              Dobro de Pontos Esta Semana!
+              Entrega Grátis + 20% Desconto!
             </h2>
             <p className="text-muted-foreground">
-              Abasteça qualquer quantidade e ganhe pontos em dobro. Válido até
-              domingo, 12 de Janeiro.
+              Estreia do E-commerce Sonangol: peças automotivas, óleos
+              sintéticos e acessórios. Primeira compra com entrega gratuita em
+              toda Luanda.
             </p>
           </div>
           <div className="hidden md:block">
-            <button className="px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors duration-200">
-              Participar Agora
-            </button>
+            <Link
+              href="/dashboard/e-commerce"
+              className="px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors duration-200"
+            >
+              Explorar Loja
+            </Link>
           </div>
         </div>
       </div>
@@ -165,6 +175,13 @@ const DashboardPage = () => {
           </div>
           <div className="space-y-4">
             <ActivityItem
+              icon={<ShoppingCart className="h-4 w-4" />}
+              description="Comprou óleo sintético 5W-30 no E-commerce"
+              time="Há 1 hora"
+              amount="8.500 AOA"
+              status="success"
+            />
+            <ActivityItem
               icon={<TrendingUp className="h-4 w-4" />}
               description="Abastecimento de 20L na Bomba Sonangol Cacuaco"
               time="Há 2 horas"
@@ -172,10 +189,10 @@ const DashboardPage = () => {
               status="success"
             />
             <ActivityItem
-              icon={<Users className="h-4 w-4" />}
-              description="Publicou dica sobre manutenção na Comunidade"
+              icon={<Brain className="h-4 w-4" />}
+              description="IA recomendou filtro de ar - 25% desconto ativo"
               time="Ontem"
-              amount="+50 pontos"
+              amount="Economia 15%"
               status="info"
             />
             <ActivityItem
@@ -184,13 +201,6 @@ const DashboardPage = () => {
               time="Amanhã, 14:00"
               amount="3.500 AOA"
               status="pending"
-            />
-            <ActivityItem
-              icon={<Star className="h-4 w-4" />}
-              description="Avaliou Bomba Sonangol Maianga (5 estrelas)"
-              time="3 dias atrás"
-              amount="+25 pontos"
-              status="success"
             />
           </div>
         </div>
@@ -208,23 +218,23 @@ const DashboardPage = () => {
           <div className="space-y-4">
             <AlertItem
               type="warning"
-              title="Gás Acabando"
-              description="Sua botija deve acabar em 8 dias. Quer agendar entrega?"
-              action="Agendar"
+              title="Recomendação IA"
+              description="Filtro de óleo vence em 5 dias. Substitua agora com 20% desconto no E-commerce."
+              action="Comprar"
               urgent={true}
             />
             <AlertItem
               type="info"
-              title="Promoção Personalizada"
-              description="10% desconto em gasóleo na sua bomba preferida hoje."
-              action="Aproveitar"
+              title="Oferta Personalizada"
+              description="Óleo sintético em promoção baseado no seu histórico de compras."
+              action="Ver Oferta"
               urgent={false}
             />
             <AlertItem
               type="success"
-              title="Meta Atingida"
-              description="Parabéns! Economizou 15% este mês vs objetivo."
-              action="Ver Relatório"
+              title="Entrega Confirmada"
+              description="Seu pedido do E-commerce será entregue hoje às 15:30."
+              action="Rastrear"
               urgent={false}
             />
           </div>
