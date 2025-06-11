@@ -50,7 +50,99 @@ export const stationStatusData = [
         gasolineStockValue: 6400000, // AOA (32000L * 200 AOA/L)
         lastUpdate: "2025-06-09T09:00:00Z",
         dailyRevenue: 2850000, // AOA
-        losses: 45000 // AOA
+        losses: 45000, // AOA
+        wells: [
+            {
+                id: "W001",
+                number: 1,
+                type: "Gasóleo",
+                status: "Ativo",
+                level: 90,
+                capacity: 15000,
+                currentStock: 13500,
+                lastMaintenance: "2025-06-01T10:00:00Z",
+                issues: [],
+                equipment: {
+                    pump: "Operacional",
+                    hoses: "Bom estado",
+                    nozzles: "Operacional"
+                }
+            },
+            {
+                id: "W002",
+                number: 2,
+                type: "Gasóleo",
+                status: "Ativo",
+                level: 80,
+                capacity: 15000,
+                currentStock: 12000,
+                lastMaintenance: "2025-06-01T10:00:00Z",
+                issues: [],
+                equipment: {
+                    pump: "Operacional",
+                    hoses: "Bom estado",
+                    nozzles: "Operacional"
+                }
+            },
+            {
+                id: "W003",
+                number: 3,
+                type: "Gasolina",
+                status: "Ativo",
+                level: 75,
+                capacity: 12000,
+                currentStock: 9000,
+                lastMaintenance: "2025-06-01T10:00:00Z",
+                issues: [],
+                equipment: {
+                    pump: "Operacional",
+                    hoses: "Bom estado",
+                    nozzles: "Operacional"
+                }
+            },
+            {
+                id: "W004",
+                number: 4,
+                type: "Gasolina",
+                status: "Manutenção",
+                level: 65,
+                capacity: 12000,
+                currentStock: 7800,
+                lastMaintenance: "2025-05-25T14:00:00Z",
+                issues: ["Mangueira danificada", "Bomba com ruído"],
+                equipment: {
+                    pump: "Manutenção",
+                    hoses: "Danificado",
+                    nozzles: "Operacional"
+                }
+            }
+        ],
+        suppliers: [
+            {
+                id: "SUP001",
+                company: "Petro Distribuidora Lda",
+                lastDelivery: "2025-06-08T14:30:00Z",
+                fuelType: "Gasóleo",
+                quantity: 25000,
+                wellsSupplied: ["W001", "W002"],
+                batchNumber: "GAS240608001",
+                qualityCheck: "Aprovado",
+                driver: "João Silva",
+                truck: "LU-123-AB"
+            },
+            {
+                id: "SUP002",
+                company: "Fuel Supply Angola",
+                lastDelivery: "2025-06-07T09:15:00Z",
+                fuelType: "Gasolina",
+                quantity: 18000,
+                wellsSupplied: ["W003", "W004"],
+                batchNumber: "GAS240607002",
+                qualityCheck: "Aprovado",
+                driver: "Maria Santos",
+                truck: "LU-456-CD"
+            }
+        ]
     },
     {
         id: "PS002",
@@ -67,7 +159,99 @@ export const stationStatusData = [
         gasolineStockValue: 2200000, // AOA
         lastUpdate: "2025-06-09T08:30:00Z",
         dailyRevenue: 1950000, // AOA
-        losses: 125000 // AOA (higher due to maintenance issues)
+        losses: 125000, // AOA (higher due to maintenance issues)
+        wells: [
+            {
+                id: "W005",
+                number: 1,
+                type: "Gasóleo",
+                status: "Inativo",
+                level: 25,
+                capacity: 15000,
+                currentStock: 3750,
+                lastMaintenance: "2025-05-20T08:00:00Z",
+                issues: ["Combustível comprometido", "Filtro entupido"],
+                equipment: {
+                    pump: "Manutenção",
+                    hoses: "Bom estado",
+                    nozzles: "Inativo"
+                }
+            },
+            {
+                id: "W006",
+                number: 2,
+                type: "Gasóleo",
+                status: "Ativo",
+                level: 35,
+                capacity: 15000,
+                currentStock: 5250,
+                lastMaintenance: "2025-06-01T10:00:00Z",
+                issues: [],
+                equipment: {
+                    pump: "Operacional",
+                    hoses: "Bom estado",
+                    nozzles: "Operacional"
+                }
+            },
+            {
+                id: "W007",
+                number: 3,
+                type: "Gasolina",
+                status: "Ativo",
+                level: 30,
+                capacity: 12000,
+                currentStock: 3600,
+                lastMaintenance: "2025-06-01T10:00:00Z",
+                issues: [],
+                equipment: {
+                    pump: "Operacional",
+                    hoses: "Desgastado",
+                    nozzles: "Operacional"
+                }
+            },
+            {
+                id: "W008",
+                number: 4,
+                type: "Gasolina",
+                status: "Inativo",
+                level: 20,
+                capacity: 12000,
+                currentStock: 2400,
+                lastMaintenance: "2025-05-15T16:00:00Z",
+                issues: ["Sistema elétrico com falha", "Vazamento detectado"],
+                equipment: {
+                    pump: "Avariado",
+                    hoses: "Danificado",
+                    nozzles: "Inativo"
+                }
+            }
+        ],
+        suppliers: [
+            {
+                id: "SUP003",
+                company: "Angola Fuel Distribution",
+                lastDelivery: "2025-06-05T11:20:00Z",
+                fuelType: "Gasóleo",
+                quantity: 20000,
+                wellsSupplied: ["W005", "W006"],
+                batchNumber: "GAS240605003",
+                qualityCheck: "Rejeitado - W005",
+                driver: "Carlos Mendes",
+                truck: "LU-789-EF"
+            },
+            {
+                id: "SUP004",
+                company: "Petro Distribuidora Lda",
+                lastDelivery: "2025-06-04T15:45:00Z",
+                fuelType: "Gasolina",
+                quantity: 15000,
+                wellsSupplied: ["W007", "W008"],
+                batchNumber: "GAS240604004",
+                qualityCheck: "Aprovado",
+                driver: "Ana Costa",
+                truck: "LU-321-GH"
+            }
+        ]
     },
     {
         id: "PS003",
