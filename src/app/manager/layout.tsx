@@ -138,6 +138,14 @@ export default function ManagerLayout({
         <main className="flex-grow p-6 overflow-auto relative z-10">
           {children}
         </main>
+
+        {/* Footer */}
+        <footer className="glassmorphism border-t border-white/20 p-4 relative z-10">
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+            © 2024 Sonangol. Privacidade Garantida - IA Ética - Desenvolvido por
+            Arlindo Almada
+          </p>
+        </footer>
       </div>
     </div>
   );
