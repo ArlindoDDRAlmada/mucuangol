@@ -39,9 +39,15 @@ export const stationStatusData = [
         id: "PS001",
         name: "Posto Central",
         location: "Luanda",
+        province: "Luanda",
+        municipality: "Luanda",
         status: "Operacional",
         dieselLevel: 85,
         gasolineLevel: 70,
+        dieselStock: 45000, // litros
+        gasolineStock: 32000, // litros
+        dieselStockValue: 8100000, // AOA (45000L * 180 AOA/L)
+        gasolineStockValue: 6400000, // AOA (32000L * 200 AOA/L)
         lastUpdate: "2025-06-09T09:00:00Z",
         dailyRevenue: 2850000, // AOA
         losses: 45000 // AOA
@@ -50,9 +56,15 @@ export const stationStatusData = [
         id: "PS002",
         name: "Posto Aeroporto",
         location: "Luanda",
+        province: "Luanda",
+        municipality: "Luanda",
         status: "Manutenção",
         dieselLevel: 30,
         gasolineLevel: 25,
+        dieselStock: 15000, // litros
+        gasolineStock: 11000, // litros
+        dieselStockValue: 2700000, // AOA
+        gasolineStockValue: 2200000, // AOA
         lastUpdate: "2025-06-09T08:30:00Z",
         dailyRevenue: 1950000, // AOA
         losses: 125000 // AOA (higher due to maintenance issues)
@@ -61,9 +73,15 @@ export const stationStatusData = [
         id: "PS003",
         name: "Posto Viana",
         location: "Viana",
+        province: "Luanda",
+        municipality: "Viana",
         status: "Offline",
         dieselLevel: 0,
         gasolineLevel: 0,
+        dieselStock: 0, // litros
+        gasolineStock: 0, // litros
+        dieselStockValue: 0, // AOA
+        gasolineStockValue: 0, // AOA
         lastUpdate: "2025-06-09T07:45:00Z",
         dailyRevenue: 0, // AOA (offline)
         losses: 350000 // AOA (total loss due to offline status)
@@ -72,9 +90,15 @@ export const stationStatusData = [
         id: "PS004",
         name: "Posto Cacuaco",
         location: "Cacuaco",
+        province: "Luanda",
+        municipality: "Cacuaco",
         status: "Operacional",
         dieselLevel: 95,
         gasolineLevel: 90,
+        dieselStock: 52000, // litros
+        gasolineStock: 41000, // litros
+        dieselStockValue: 9360000, // AOA
+        gasolineStockValue: 8200000, // AOA
         lastUpdate: "2025-06-09T09:15:00Z",
         dailyRevenue: 3200000, // AOA
         losses: 25000 // AOA
@@ -83,9 +107,15 @@ export const stationStatusData = [
         id: "PS005",
         name: "Posto Benfica",
         location: "Benfica",
+        province: "Luanda",
+        municipality: "Luanda",
         status: "Operacional",
         dieselLevel: 60,
         gasolineLevel: 55,
+        dieselStock: 28000, // litros
+        gasolineStock: 24000, // litros
+        dieselStockValue: 5040000, // AOA
+        gasolineStockValue: 4800000, // AOA
         lastUpdate: "2025-06-09T09:05:00Z",
         dailyRevenue: 2100000, // AOA
         losses: 65000 // AOA
@@ -94,9 +124,15 @@ export const stationStatusData = [
         id: "PS006",
         name: "Posto Talatona",
         location: "Talatona",
+        province: "Luanda",
+        municipality: "Talatona",
         status: "Manutenção",
         dieselLevel: 15,
         gasolineLevel: 10,
+        dieselStock: 8000, // litros
+        gasolineStock: 4500, // litros
+        dieselStockValue: 1440000, // AOA
+        gasolineStockValue: 900000, // AOA
         lastUpdate: "2025-06-09T08:00:00Z",
         dailyRevenue: 850000, // AOA
         losses: 180000 // AOA (higher due to maintenance)
@@ -105,12 +141,69 @@ export const stationStatusData = [
         id: "PS007",
         name: "Posto Kikolo",
         location: "Kikolo",
+        province: "Luanda",
+        municipality: "Luanda",
         status: "Operacional",
         dieselLevel: 75,
         gasolineLevel: 80,
+        dieselStock: 38000, // litros
+        gasolineStock: 35000, // litros
+        dieselStockValue: 6840000, // AOA
+        gasolineStockValue: 7000000, // AOA
         lastUpdate: "2025-06-09T09:20:00Z",
         dailyRevenue: 2650000, // AOA
         losses: 35000 // AOA
+    },
+    {
+        id: "PS008",
+        name: "Posto Benguela Centro",
+        location: "Benguela",
+        province: "Benguela",
+        municipality: "Benguela",
+        status: "Operacional",
+        dieselLevel: 80,
+        gasolineLevel: 75,
+        dieselStock: 42000, // litros
+        gasolineStock: 33000, // litros
+        dieselStockValue: 7560000, // AOA
+        gasolineStockValue: 6600000, // AOA
+        lastUpdate: "2025-06-09T09:10:00Z",
+        dailyRevenue: 2400000, // AOA
+        losses: 38000 // AOA
+    },
+    {
+        id: "PS009",
+        name: "Posto Huambo",
+        location: "Huambo",
+        province: "Huambo",
+        municipality: "Huambo",
+        status: "Operacional",
+        dieselLevel: 65,
+        gasolineLevel: 70,
+        dieselStock: 32000, // litros
+        gasolineStock: 30000, // litros
+        dieselStockValue: 5760000, // AOA
+        gasolineStockValue: 6000000, // AOA
+        lastUpdate: "2025-06-09T08:45:00Z",
+        dailyRevenue: 1800000, // AOA
+        losses: 42000 // AOA
+    },
+    {
+        id: "PS010",
+        name: "Posto Lubango",
+        location: "Lubango",
+        province: "Huíla",
+        municipality: "Lubango",
+        status: "Operacional",
+        dieselLevel: 90,
+        gasolineLevel: 85,
+        dieselStock: 48000, // litros
+        gasolineStock: 38000, // litros
+        dieselStockValue: 8640000, // AOA
+        gasolineStockValue: 7600000, // AOA
+        lastUpdate: "2025-06-09T09:25:00Z",
+        dailyRevenue: 2200000, // AOA
+        losses: 28000 // AOA
     },
 ];
 
