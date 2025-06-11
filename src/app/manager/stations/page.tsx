@@ -290,10 +290,11 @@ export default function StationsPage() {
                       AOA
                     </div>
                     <div className="text-xs text-gray-500">
-                      G: {station.dieselStockValue.toLocaleString()}
+                      Gasóleo: {station.dieselStockValue.toLocaleString()} AOA
                     </div>
                     <div className="text-xs text-gray-500">
-                      P: {station.gasolineStockValue.toLocaleString()}
+                      Gasolina: {station.gasolineStockValue.toLocaleString()}{" "}
+                      AOA
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
