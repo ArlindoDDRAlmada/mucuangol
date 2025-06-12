@@ -60,6 +60,8 @@ export const stationStatusData = [
                 level: 90,
                 capacity: 15000,
                 currentStock: 13500,
+                stockValue: 2430000, // 13500L * 180 AOA/L
+                pricePerLiter: 180,
                 lastMaintenance: "2025-06-01T10:00:00Z",
                 issues: [],
                 equipment: {
@@ -76,6 +78,8 @@ export const stationStatusData = [
                 level: 80,
                 capacity: 15000,
                 currentStock: 12000,
+                stockValue: 2160000, // 12000L * 180 AOA/L
+                pricePerLiter: 180,
                 lastMaintenance: "2025-06-01T10:00:00Z",
                 issues: [],
                 equipment: {
@@ -92,6 +96,8 @@ export const stationStatusData = [
                 level: 75,
                 capacity: 12000,
                 currentStock: 9000,
+                stockValue: 1800000, // 9000L * 200 AOA/L
+                pricePerLiter: 200,
                 lastMaintenance: "2025-06-01T10:00:00Z",
                 issues: [],
                 equipment: {
@@ -108,6 +114,8 @@ export const stationStatusData = [
                 level: 65,
                 capacity: 12000,
                 currentStock: 7800,
+                stockValue: 1560000, // 7800L * 200 AOA/L
+                pricePerLiter: 200,
                 lastMaintenance: "2025-05-25T14:00:00Z",
                 issues: ["Mangueira danificada", "Bomba com ruído"],
                 equipment: {
@@ -124,6 +132,8 @@ export const stationStatusData = [
                 lastDelivery: "2025-06-08T14:30:00Z",
                 fuelType: "Gasóleo",
                 quantity: 25000,
+                totalValue: 4500000, // 25000L * 180 AOA/L
+                pricePerLiter: 180,
                 wellsSupplied: ["W001", "W002"],
                 batchNumber: "GAS240608001",
                 qualityCheck: "Aprovado",
@@ -136,11 +146,41 @@ export const stationStatusData = [
                 lastDelivery: "2025-06-07T09:15:00Z",
                 fuelType: "Gasolina",
                 quantity: 18000,
+                totalValue: 3600000, // 18000L * 200 AOA/L
+                pricePerLiter: 200,
                 wellsSupplied: ["W003", "W004"],
                 batchNumber: "GAS240607002",
                 qualityCheck: "Aprovado",
                 driver: "Maria Santos",
                 truck: "LU-456-CD"
+            },
+            {
+                id: "SUP005",
+                company: "Petro Distribuidora Lda",
+                lastDelivery: "2025-06-05T16:20:00Z",
+                fuelType: "Gasóleo",
+                quantity: 30000,
+                totalValue: 5400000,
+                pricePerLiter: 180,
+                wellsSupplied: ["W001", "W002"],
+                batchNumber: "GAS240605005",
+                qualityCheck: "Aprovado",
+                driver: "Pedro Alves",
+                truck: "LU-789-XY"
+            },
+            {
+                id: "SUP006",
+                company: "Fuel Supply Angola",
+                lastDelivery: "2025-06-03T11:45:00Z",
+                fuelType: "Gasolina",
+                quantity: 22000,
+                totalValue: 4400000,
+                pricePerLiter: 200,
+                wellsSupplied: ["W003", "W004"],
+                batchNumber: "GAS240603006",
+                qualityCheck: "Aprovado",
+                driver: "Luisa Fernandes",
+                truck: "LU-456-ZW"
             }
         ]
     },
@@ -169,6 +209,8 @@ export const stationStatusData = [
                 level: 25,
                 capacity: 15000,
                 currentStock: 3750,
+                stockValue: 675000, // 3750L * 180 AOA/L
+                pricePerLiter: 180,
                 lastMaintenance: "2025-05-20T08:00:00Z",
                 issues: ["Combustível comprometido", "Filtro entupido"],
                 equipment: {
@@ -185,6 +227,8 @@ export const stationStatusData = [
                 level: 35,
                 capacity: 15000,
                 currentStock: 5250,
+                stockValue: 945000, // 5250L * 180 AOA/L
+                pricePerLiter: 180,
                 lastMaintenance: "2025-06-01T10:00:00Z",
                 issues: [],
                 equipment: {
@@ -201,6 +245,8 @@ export const stationStatusData = [
                 level: 30,
                 capacity: 12000,
                 currentStock: 3600,
+                stockValue: 720000, // 3600L * 200 AOA/L
+                pricePerLiter: 200,
                 lastMaintenance: "2025-06-01T10:00:00Z",
                 issues: [],
                 equipment: {
@@ -217,6 +263,8 @@ export const stationStatusData = [
                 level: 20,
                 capacity: 12000,
                 currentStock: 2400,
+                stockValue: 480000, // 2400L * 200 AOA/L
+                pricePerLiter: 200,
                 lastMaintenance: "2025-05-15T16:00:00Z",
                 issues: ["Sistema elétrico com falha", "Vazamento detectado"],
                 equipment: {
@@ -233,6 +281,8 @@ export const stationStatusData = [
                 lastDelivery: "2025-06-05T11:20:00Z",
                 fuelType: "Gasóleo",
                 quantity: 20000,
+                totalValue: 3600000, // 20000L * 180 AOA/L
+                pricePerLiter: 180,
                 wellsSupplied: ["W005", "W006"],
                 batchNumber: "GAS240605003",
                 qualityCheck: "Rejeitado - W005",
@@ -245,11 +295,41 @@ export const stationStatusData = [
                 lastDelivery: "2025-06-04T15:45:00Z",
                 fuelType: "Gasolina",
                 quantity: 15000,
+                totalValue: 3000000, // 15000L * 200 AOA/L
+                pricePerLiter: 200,
                 wellsSupplied: ["W007", "W008"],
                 batchNumber: "GAS240604004",
                 qualityCheck: "Aprovado",
                 driver: "Ana Costa",
                 truck: "LU-321-GH"
+            },
+            {
+                id: "SUP007",
+                company: "Angola Fuel Distribution",
+                lastDelivery: "2025-06-01T09:30:00Z",
+                fuelType: "Gasóleo",
+                quantity: 25000,
+                totalValue: 4500000,
+                pricePerLiter: 180,
+                wellsSupplied: ["W005", "W006"],
+                batchNumber: "GAS240601007",
+                qualityCheck: "Aprovado",
+                driver: "Roberto Silva",
+                truck: "LU-654-MN"
+            },
+            {
+                id: "SUP008",
+                company: "Fuel Supply Angola",
+                lastDelivery: "2025-05-30T14:15:00Z",
+                fuelType: "Gasolina",
+                quantity: 18000,
+                totalValue: 3600000,
+                pricePerLiter: 200,
+                wellsSupplied: ["W007", "W008"],
+                batchNumber: "GAS240530008",
+                qualityCheck: "Aprovado",
+                driver: "Carla Nunes",
+                truck: "LU-987-PQ"
             }
         ]
     },

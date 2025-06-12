@@ -29,6 +29,7 @@ import {
   User,
   Calendar,
   Package,
+  Printer,
 } from "lucide-react";
 
 // Helper function to get progress bar color based on level
@@ -108,6 +109,127 @@ export default function StationsPage() {
 
   const toggleStationDetails = (stationId: string) => {
     setExpandedStation(expandedStation === stationId ? null : stationId);
+  };
+
+  const printSupplierReport = (
+    suppliers: (typeof allStations)[0]["suppliers"],
+    stationName: string
+  ) => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow || !suppliers) return;
+
+    const currentDate = new Date().toLocaleDateString("pt-AO");
+    const totalValue = suppliers.reduce(
+      (sum, supplier) => sum + (supplier.totalValue || 0),
+      0
+    );
+    const totalQuantity = suppliers.reduce(
+      (sum, supplier) => sum + supplier.quantity,
+      0
+    );
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Relatório de Fornecedores - ${stationName}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .header { text-align: center; margin-bottom: 30px; }
+            .station-info { margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            .summary { background-color: #f9f9f9; padding: 15px; margin-top: 20px; }
+            .approved { color: green; font-weight: bold; }
+            .rejected { color: red; font-weight: bold; }
+            @media print { body { margin: 0; } }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>SONANGOL</h1>
+            <h2>Relatório de Fornecedores</h2>
+            <h3>${stationName}</h3>
+            <p>Data do Relatório: ${currentDate}</p>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Empresa</th>
+                <th>Tipo Combustível</th>
+                <th>Quantidade (L)</th>
+                <th>Valor Total (AOA)</th>
+                <th>Preço/L (AOA)</th>
+                <th>Data Entrega</th>
+                <th>Motorista</th>
+                <th>Caminhão</th>
+                <th>Lote</th>
+                <th>Qualidade</th>
+                <th>Poços</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${suppliers
+                .map(
+                  (supplier) => `
+                <tr>
+                  <td>${supplier.company}</td>
+                  <td>${supplier.fuelType}</td>
+                  <td>${supplier.quantity.toLocaleString()}</td>
+                  <td>${(supplier.totalValue || 0).toLocaleString()}</td>
+                  <td>${supplier.pricePerLiter || "N/A"}</td>
+                  <td>${new Date(supplier.lastDelivery).toLocaleString(
+                    "pt-AO"
+                  )}</td>
+                  <td>${supplier.driver}</td>
+                  <td>${supplier.truck}</td>
+                  <td>${supplier.batchNumber}</td>
+                  <td class="${
+                    supplier.qualityCheck.includes("Aprovado")
+                      ? "approved"
+                      : "rejected"
+                  }">
+                    ${supplier.qualityCheck}
+                  </td>
+                  <td>${supplier.wellsSupplied.join(", ")}</td>
+                </tr>
+              `
+                )
+                .join("")}
+            </tbody>
+          </table>
+
+          <div class="summary">
+            <h3>Resumo</h3>
+            <p><strong>Total de Entregas:</strong> ${suppliers.length}</p>
+            <p><strong>Quantidade Total:</strong> ${totalQuantity.toLocaleString()} L</p>
+            <p><strong>Valor Total:</strong> ${totalValue.toLocaleString()} AOA</p>
+            <p><strong>Aprovadas:</strong> ${
+              suppliers.filter((s) => s.qualityCheck.includes("Aprovado"))
+                .length
+            }</p>
+            <p><strong>Rejeitadas:</strong> ${
+              suppliers.filter((s) => !s.qualityCheck.includes("Aprovado"))
+                .length
+            }</p>
+          </div>
+
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() {
+                window.close();
+              };
+            };
+          </script>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
   };
 
   const getStatusIcon = (status: string) => {
@@ -420,6 +542,18 @@ export default function StationsPage() {
                                         {well.currentStock.toLocaleString()}L /{" "}
                                         {well.capacity.toLocaleString()}L
                                       </div>
+                                      {well.stockValue && (
+                                        <div className="text-sm font-medium text-blue-600 flex items-center gap-1">
+                                          <DollarSign className="h-3 w-3" />
+                                          Valor:{" "}
+                                          {well.stockValue.toLocaleString()} AOA
+                                        </div>
+                                      )}
+                                      {well.pricePerLiter && (
+                                        <div className="text-xs text-gray-500">
+                                          Preço/L: {well.pricePerLiter} AOA
+                                        </div>
+                                      )}
                                     </div>
 
                                     <Progress
@@ -489,10 +623,28 @@ export default function StationsPage() {
                           {/* Suppliers Section */}
                           {station.suppliers && (
                             <div>
-                              <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <Truck className="h-5 w-5" />
-                                Histórico de Fornecedores
-                              </h4>
+                              <div className="flex items-center justify-between mb-4">
+                                <h4 className="text-lg font-semibold flex items-center gap-2">
+                                  <Truck className="h-5 w-5" />
+                                  Histórico de Fornecedores
+                                </h4>
+                                <div className="flex gap-2">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                      printSupplierReport(
+                                        station.suppliers,
+                                        station.name
+                                      )
+                                    }
+                                    className="flex items-center gap-1"
+                                  >
+                                    <Printer className="h-4 w-4" />
+                                    Imprimir Relatório
+                                  </Button>
+                                </div>
+                              </div>
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {station.suppliers.map((supplier) => (
                                   <Card key={supplier.id} className="p-4">
@@ -523,6 +675,23 @@ export default function StationsPage() {
                                             L
                                           </span>
                                         </div>
+
+                                        {supplier.totalValue && (
+                                          <div className="flex items-center gap-2">
+                                            <DollarSign className="h-4 w-4 text-blue-500" />
+                                            <span className="font-medium text-blue-600">
+                                              {supplier.totalValue.toLocaleString()}{" "}
+                                              AOA
+                                            </span>
+                                          </div>
+                                        )}
+
+                                        {supplier.pricePerLiter && (
+                                          <div className="text-xs text-gray-500">
+                                            Preço/L: {supplier.pricePerLiter}{" "}
+                                            AOA
+                                          </div>
+                                        )}
 
                                         <div className="flex items-center gap-2">
                                           <Calendar className="h-4 w-4 text-gray-500" />
