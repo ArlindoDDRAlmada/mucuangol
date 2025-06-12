@@ -272,15 +272,75 @@ const BombasPage = () => {
   };
 
   const handleLocateUser = () => {
+    if (!navigator.geolocation) {
+      alert("A geolocalização não é suportada pelo seu navegador.");
+      return;
+    }
+
+    // Show loading state
+    const button = document.querySelector(
+      "[data-locate-button]"
+    ) as HTMLButtonElement;
+    if (button) {
+      button.disabled = true;
+      button.textContent = "🔄 Localizando...";
+    }
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setUserLocation([position.coords.latitude, position.coords.longitude]);
+        const newLocation: [number, number] = [
+          position.coords.latitude,
+          position.coords.longitude,
+        ];
+        setUserLocation(newLocation);
+
+        // Reset button
+        if (button) {
+          button.disabled = false;
+          button.textContent = "📍 Minha Localização";
+        }
+
+        console.log("User location set:", newLocation);
+        alert(
+          `Localização obtida com sucesso! Latitude: ${position.coords.latitude.toFixed(
+            6
+          )}, Longitude: ${position.coords.longitude.toFixed(6)}`
+        );
       },
       (error) => {
         console.error("Error getting user location:", error);
-        alert(
-          "Não foi possível obter a sua localização. Por favor, verifique as permissões do seu navegador."
-        );
+
+        // Reset button
+        if (button) {
+          button.disabled = false;
+          button.textContent = "📍 Minha Localização";
+        }
+
+        let errorMessage = "Não foi possível obter a sua localização.";
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage =
+              "Permissão de localização negada. Por favor, permita o acesso à localização nas configurações do navegador.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Informação de localização não disponível.";
+            break;
+          case error.TIMEOUT:
+            errorMessage = "Tempo limite para obter localização excedido.";
+            break;
+        }
+
+        alert(errorMessage);
+
+        // Fallback to simulated location (Luanda center)
+        const simulatedLocation: [number, number] = [-8.8368, 13.2343];
+        setUserLocation(simulatedLocation);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 300000,
       }
     );
   };
@@ -310,7 +370,8 @@ const BombasPage = () => {
             </div>
             <button
               onClick={handleLocateUser}
-              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-medium hover:shadow-lg transition-all duration-300"
+              data-locate-button
+              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-medium hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               📍 Minha Localização
             </button>
