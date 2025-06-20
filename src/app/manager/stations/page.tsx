@@ -43,6 +43,8 @@ export default function StationsPage() {
   const [selectedProvince, setSelectedProvince] = useState("all");
   const [selectedMunicipality, setSelectedMunicipality] = useState("all");
   const [expandedStation, setExpandedStation] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // Get unique provinces and municipalities
   const provinces = [
@@ -105,11 +107,37 @@ export default function StationsPage() {
   const resetFilters = () => {
     setSelectedProvince("all");
     setSelectedMunicipality("all");
+    setStartDate("");
+    setEndDate("");
   };
 
   const toggleStationDetails = (stationId: string) => {
     setExpandedStation(expandedStation === stationId ? null : stationId);
   };
+
+  const filteredSuppliers = useMemo(() => {
+    if (!expandedStation) return [];
+
+    const station = allStations.find((s) => s.id === expandedStation);
+    if (!station || !station.suppliers) return [];
+
+    return station.suppliers.filter((supplier) => {
+      const deliveryDate = new Date(supplier.lastDelivery);
+      deliveryDate.setHours(0, 0, 0, 0);
+
+      if (startDate) {
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+        if (start > deliveryDate) return false;
+      }
+      if (endDate) {
+        const end = new Date(endDate);
+        end.setHours(0, 0, 0, 0);
+        if (end < deliveryDate) return false;
+      }
+      return true;
+    });
+  }, [expandedStation, startDate, endDate]);
 
   const printSupplierReport = (
     suppliers: (typeof allStations)[0]["suppliers"],
@@ -628,100 +656,159 @@ export default function StationsPage() {
                                   <Truck className="h-5 w-5" />
                                   Histórico de Fornecedores
                                 </h4>
-                                <div className="flex gap-2">
+                              </div>
+
+                              <Card className="mb-4 p-4 bg-gray-50 dark:bg-gray-800/50">
+                                <div className="flex flex-wrap items-end gap-4">
+                                  <div className="flex flex-col space-y-1">
+                                    <label
+                                      htmlFor="start-date"
+                                      className="text-sm font-medium"
+                                    >
+                                      Data Início:
+                                    </label>
+                                    <input
+                                      type="date"
+                                      id="start-date"
+                                      value={startDate}
+                                      onChange={(e) =>
+                                        setStartDate(e.target.value)
+                                      }
+                                      className="px-3 py-2 border rounded-md bg-white dark:bg-gray-900"
+                                    />
+                                  </div>
+                                  <div className="flex flex-col space-y-1">
+                                    <label
+                                      htmlFor="end-date"
+                                      className="text-sm font-medium"
+                                    >
+                                      Data Fim:
+                                    </label>
+                                    <input
+                                      type="date"
+                                      id="end-date"
+                                      value={endDate}
+                                      onChange={(e) =>
+                                        setEndDate(e.target.value)
+                                      }
+                                      className="px-3 py-2 border rounded-md bg-white dark:bg-gray-900"
+                                    />
+                                  </div>
                                   <Button
+                                    onClick={() => {
+                                      setStartDate("");
+                                      setEndDate("");
+                                    }}
                                     variant="outline"
-                                    size="sm"
-                                    onClick={() =>
-                                      printSupplierReport(
-                                        station.suppliers,
-                                        station.name
-                                      )
-                                    }
-                                    className="flex items-center gap-1"
                                   >
-                                    <Printer className="h-4 w-4" />
-                                    Imprimir Relatório
+                                    Limpar
                                   </Button>
                                 </div>
-                              </div>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {station.suppliers.map((supplier) => (
-                                  <Card key={supplier.id} className="p-4">
-                                    <div className="space-y-3">
-                                      <div className="flex items-center justify-between">
-                                        <h5 className="font-medium">
-                                          {supplier.company}
-                                        </h5>
-                                        <Badge
-                                          className={
-                                            supplier.qualityCheck.includes(
-                                              "Aprovado"
-                                            )
-                                              ? "bg-green-500"
-                                              : "bg-red-500"
-                                          }
-                                        >
-                                          {supplier.qualityCheck}
-                                        </Badge>
-                                      </div>
+                              </Card>
 
-                                      <div className="space-y-2 text-sm">
-                                        <div className="flex items-center gap-2">
-                                          <Package className="h-4 w-4 text-gray-500" />
-                                          <span>
-                                            {supplier.fuelType} -{" "}
-                                            {supplier.quantity.toLocaleString()}
-                                            L
-                                          </span>
+                              <div className="flex gap-2 mb-4">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() =>
+                                    printSupplierReport(
+                                      filteredSuppliers,
+                                      station.name
+                                    )
+                                  }
+                                  className="flex items-center gap-1"
+                                  disabled={filteredSuppliers.length === 0}
+                                >
+                                  <Printer className="h-4 w-4" />
+                                  Imprimir Relatório Filtrado
+                                </Button>
+                              </div>
+
+                              {filteredSuppliers.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  {filteredSuppliers.map((supplier) => (
+                                    <Card key={supplier.id} className="p-4">
+                                      <div className="space-y-3">
+                                        <div className="flex items-center justify-between">
+                                          <h5 className="font-medium">
+                                            {supplier.company}
+                                          </h5>
+                                          <Badge
+                                            className={
+                                              supplier.qualityCheck.includes(
+                                                "Aprovado"
+                                              )
+                                                ? "bg-green-500"
+                                                : "bg-red-500"
+                                            }
+                                          >
+                                            {supplier.qualityCheck}
+                                          </Badge>
                                         </div>
 
-                                        {supplier.totalValue && (
+                                        <div className="space-y-2 text-sm">
                                           <div className="flex items-center gap-2">
-                                            <DollarSign className="h-4 w-4 text-blue-500" />
-                                            <span className="font-medium text-blue-600">
-                                              {supplier.totalValue.toLocaleString()}{" "}
-                                              AOA
+                                            <Package className="h-4 w-4 text-gray-500" />
+                                            <span>
+                                              {supplier.fuelType} -{" "}
+                                              {supplier.quantity.toLocaleString()}
+                                              L
                                             </span>
                                           </div>
-                                        )}
 
-                                        {supplier.pricePerLiter && (
-                                          <div className="text-xs text-gray-500">
-                                            Preço/L: {supplier.pricePerLiter}{" "}
-                                            AOA
+                                          {supplier.totalValue && (
+                                            <div className="flex items-center gap-2">
+                                              <DollarSign className="h-4 w-4 text-blue-500" />
+                                              <span className="font-medium text-blue-600">
+                                                {supplier.totalValue.toLocaleString()}{" "}
+                                                AOA
+                                              </span>
+                                            </div>
+                                          )}
+
+                                          {supplier.pricePerLiter && (
+                                            <div className="text-xs text-gray-500">
+                                              Preço/L: {supplier.pricePerLiter}{" "}
+                                              AOA
+                                            </div>
+                                          )}
+
+                                          <div className="flex items-center gap-2">
+                                            <Calendar className="h-4 w-4 text-gray-500" />
+                                            <span>
+                                              {new Date(
+                                                supplier.lastDelivery
+                                              ).toLocaleString()}
+                                            </span>
                                           </div>
-                                        )}
 
-                                        <div className="flex items-center gap-2">
-                                          <Calendar className="h-4 w-4 text-gray-500" />
-                                          <span>
-                                            {new Date(
-                                              supplier.lastDelivery
-                                            ).toLocaleString()}
-                                          </span>
-                                        </div>
+                                          <div className="flex items-center gap-2">
+                                            <User className="h-4 w-4 text-gray-500" />
+                                            <span>
+                                              {supplier.driver} -{" "}
+                                              {supplier.truck}
+                                            </span>
+                                          </div>
 
-                                        <div className="flex items-center gap-2">
-                                          <User className="h-4 w-4 text-gray-500" />
-                                          <span>
-                                            {supplier.driver} - {supplier.truck}
-                                          </span>
-                                        </div>
+                                          <div className="text-xs text-gray-600">
+                                            Lote: {supplier.batchNumber}
+                                          </div>
 
-                                        <div className="text-xs text-gray-600">
-                                          Lote: {supplier.batchNumber}
-                                        </div>
-
-                                        <div className="text-xs text-gray-600">
-                                          Poços abastecidos:{" "}
-                                          {supplier.wellsSupplied.join(", ")}
+                                          <div className="text-xs text-gray-600">
+                                            Poços abastecidos:{" "}
+                                            {supplier.wellsSupplied.join(", ")}
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </Card>
-                                ))}
-                              </div>
+                                    </Card>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-center text-gray-500 py-4">
+                                  Nenhum fornecedor encontrado para o período
+                                  selecionado.
+                                </p>
+                              )}
                             </div>
                           )}
                         </div>
